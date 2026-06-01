@@ -1,6 +1,8 @@
 # cipher.py - CIFRADOR SIMETRICO MEJORADO
 # 8 rondas, S-box original, CBC mode, key expansion de 16 bytes
 
+import os
+
 BLOCK_SIZE = 16
 ROUNDS = 8
 
@@ -161,7 +163,7 @@ def encrypt(message: str, base_key: str) -> bytes:
     if len(key) != 16:
         raise ValueError("Key must be 16 bytes")
     subkeys = expand_key(key)
-    iv = bytes([0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88])
+    iv = os.urandom(16)
     msg_bytes = message.encode('utf-8')
     msg_len = len(msg_bytes)
     if msg_len % BLOCK_SIZE == 0:
